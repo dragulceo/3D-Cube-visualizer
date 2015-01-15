@@ -40,7 +40,7 @@ Bar.prototype.update = function(value) {
     return;
   }
 
-  litElements = this.oldLitElements + diff / Math.abs(diff);
+  litElements = this.oldLitElements + diff;
   for (var i = 0; i < this.size; i++) {
     var hex, opacity;
     if (i <= litElements) {
