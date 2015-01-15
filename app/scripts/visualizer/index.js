@@ -51,7 +51,7 @@ var render = function() {
 }
 
 var update = function(data) {
-  cube.update(normalizer(data, SIZE));
+  cube.update(normalizer(data, SIZE * SIZE));
   canvasVizualizer.update(data);
 }
 
