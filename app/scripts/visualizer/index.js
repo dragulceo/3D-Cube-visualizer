@@ -4,6 +4,9 @@ var OrbitControls = require('../utils/OrbitControls')
 var Cube = require('./3DObjects/cube')
 var visualizerEl = document.querySelector('.visualizer');
 var normalizer = require('./normalizer');
+var CanvasVizualizer = require('./Dev/canvas-visualizer');
+
+var canvasVizualizer = new CanvasVizualizer(document.querySelector('.canvas-visualizer > canvas'));
 
 var WIDTH = visualizerEl.offsetWidth;
 var HEIGHT = visualizerEl.offsetHeight;
@@ -49,6 +52,7 @@ var render = function() {
 
 var update = function(data) {
   cube.update(normalizer(data, SIZE));
+  canvasVizualizer.update(data);
 }
 
 render();
