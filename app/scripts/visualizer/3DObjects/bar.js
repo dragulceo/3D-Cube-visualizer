@@ -1,4 +1,5 @@
 var THREE = require('three.js');
+var ColorProvider = require('../color-provider');
 
 var geometry = new THREE.BoxGeometry( 1, 1, 1 );
 
@@ -9,6 +10,9 @@ var Bar = function(size, spacing) {
   this.size = size;
   this.elements = [];
   this.oldLitElements = 0;
+
+  //TODO should be a singleton
+  this.colorProvider = new ColorProvider(size, [[0, '#00FF00'], [0.5, '#FFFF00'], [1, '#FF0000']]);
 
   for (var i = 0; i < size; i++) {
     var material = new THREE.MeshLambertMaterial({
@@ -40,7 +44,7 @@ Bar.prototype.update = function(value) {
   for (var i = 0; i < this.size; i++) {
     var hex, opacity;
     if (i <= litElements) {
-      hex = 0x00ff00;
+      hex = this.colorProvider.getColor(i);
       opacity = 1;
     } else {
       hex = 0xdddddd;
