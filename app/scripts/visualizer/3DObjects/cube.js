@@ -6,7 +6,6 @@ var Cube = function(size, spacing) {
 
   this.size = size;
   this.faces = [];
-  this.histogram = [];
 
   var offset = (size - 1) / 2;
   for (var i = 0; i < size; i++) {
@@ -20,18 +19,12 @@ var Cube = function(size, spacing) {
 Cube.prototype = Object.create(THREE.Object3D.prototype);
 
 Cube.prototype.update = function(data) {
-  this.histogram.push(data);
-  if (this.histogram.length > this.size) {
-    this.histogram.shift();
-  }
-
+  var length = Math.floor(data.length / this.faces.length), arr = new Array(length);
   for (var i = 0; i < this.faces.length; i++) {
-    var hidx = this.size - i - 1;
-    if (!this.histogram[hidx]) {
-      continue;
+    for(var j = 0; j < length; j++) {
+      arr[j] = data[length * i + j];
     }
-
-    this.faces[i].update(this.histogram[hidx]);
+    this.faces[i].update(arr);
   }
 }
 

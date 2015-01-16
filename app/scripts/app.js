@@ -7,7 +7,7 @@ var audio,
   processor = context.createScriptProcessor(1024),
   /* Create an analyser node */
   analyser = context.createAnalyser(),
-  size = 8 * 8 * 8,
+  size = 256,
   visualizer = require('./visualizer')
   ;
 
