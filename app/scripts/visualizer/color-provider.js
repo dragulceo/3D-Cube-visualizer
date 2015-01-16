@@ -37,8 +37,6 @@ ColorProvider.prototype._getColorsFromContext = function (context, width, height
     colorsData = context.getImageData(0, 0, width, height);
     colorsData = colorsData.data;
     colors = [];
-    console.log(colorsData.length);
-    console.log(colorsData, width);
     for (i = 0, n = colorsData.length; i < n; i = i + 4) {
         colors.push(colorsData[i] * 256 * 256 + 256 * colorsData[i + 1] + colorsData[i + 2]);
     }
