@@ -8,7 +8,9 @@ var audio,
   /* Create an analyser node */
   analyser = context.createAnalyser(),
   size = 32,
-  visualizer = require('./visualizer')
+  visualizer = require('./visualizer'),
+  AudioFileLoader = require('./audio-file-loader'),
+  audioFileLoader
   ;
 
 /* Wire the processor into our audio context. */
@@ -29,7 +31,13 @@ var Sound = {
    * and destroy the media element source. */
   /* Removed for brevity... */
   play: function() {
-    var sound = context.createMediaElementSource(this.element);
+    this.setSource(context.createMediaElementSource(this.element));
+    /* Call `play` on the MediaElement. */
+    this.element.play();
+  },
+
+  setSource: function(source) {
+    var sound = source;
     this.element.onended = function() {
       sound.disconnect();
       sound = null;
@@ -50,8 +58,6 @@ var Sound = {
       }
       */
     };
-    /* Call `play` on the MediaElement. */
-    this.element.play();
   }
 };
 
@@ -83,3 +89,14 @@ loadAudioElement('assets/demo.wav').then(function(elem) {
   throw elem.error;
 });
 
+audioFileLoader = new AudioFileLoader(
+  document.querySelector('div.file-loader input.file'),
+  context,
+  function (audioBuffer) {
+    audio = Object.create(Sound);
+    audio.element = audioBuffer;
+    //require('./controls').setAudioEl(audioBuffer);
+    audio.setSource(audioBuffer);
+    audioBuffer.start(0);
+  }
+);
